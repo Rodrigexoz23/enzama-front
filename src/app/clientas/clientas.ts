@@ -25,8 +25,6 @@ export class Clientas {
     email: '',
     telefono: ''
   }
-  mostrarMensajeAgregar = false;
-  mostrarMensajeEliminar = false;
   clientaSeleccionada: any = null;
   modalEliminar: any;
   modalAgregar: any;
@@ -67,6 +65,8 @@ export class Clientas {
           this.clientas = resp.data;
           this.paginaActual = resp.current_page;
           this.totalPaginas = resp.last_page;
+          console.log(resp);
+          
         },
         error: err => console.error(err),
         complete: () => { 
@@ -150,22 +150,6 @@ export class Clientas {
 
   get paginas(): number[] {
     return Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
-  }
-
-  mostrarMensajeTemporal(tipo: 'agregar' | 'eliminar', tiempo = 3000) {
-    if (tipo === 'agregar') {
-      this.mostrarMensajeAgregar = true;
-      setTimeout(() => {
-        this.mostrarMensajeAgregar = false;
-      }, tiempo);
-    }
-
-    if (tipo === 'eliminar') {
-      this.mostrarMensajeEliminar = true;
-      setTimeout(() => {
-        this.mostrarMensajeEliminar = false;
-      }, tiempo);
-    }
   }
 
   mostrarToast(mensaje: string) {

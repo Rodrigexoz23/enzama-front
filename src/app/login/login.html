@@ -1,0 +1,10 @@
+<div class="container">
+  <h2>Iniciar sesión</h2>
+
+  <input type="email" [(ngModel)]="email" placeholder="Email">
+  <input type="password" [(ngModel)]="password" placeholder="Password">
+
+  <button (click)="login()">Entrar</button>
+
+  <p class="text-danger">{{ error }}</p>
+</div>
