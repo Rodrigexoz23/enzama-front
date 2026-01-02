@@ -35,19 +35,20 @@
         <td>{{viaje.fecha_inicio}}</td>
         <td>{{viaje.fecha_fin}}</td>
         <td>{{viaje.precio}}</td>
-        <td><button class="btn btn-danger btn-sm" (click)="mostrarModalEliminar(viaje)">Eliminar</button></td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="mostrarModalEliminar(viaje)">Eliminar</button>
+          <button class="btn btn-info btn-sm me-2" (click)="verClientas(viaje.id, viaje.nombre)">Ver clientas</button>
+        </td>
         </tr>
     </tbody>
     </table>
       <nav class="mt-3">
       <ul class="pagination justify-content-center">
-
         <li class="page-item" [class.disabled]="paginaActual === 1">
           <button class="page-link" (click)="cargarViajes(paginaActual - 1)">
             Anterior
           </button>
         </li>
-
         <li
           class="page-item"
           *ngFor="let p of paginas"
@@ -57,15 +58,13 @@
             {{ p }}
           </button>
         </li>
-
         <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
           <button class="page-link" (click)="cargarViajes(paginaActual + 1)">
             Siguiente
           </button>
         </li>
-
       </ul>
-    </nav>  
+    </nav> 
 </div>
 
 <!-- MODAL DE PARA AGREGAR VIAJE -->
@@ -137,6 +136,62 @@
           Cancelar
         </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CLIENTAS POR VIAJE -->
+<div class="modal fade" id="modalClientasViaje" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Clientas del viaje: {{ viajeSeleccionado }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <div *ngIf="clientas.length === 0" class="text-center text-muted">
+          No hay clientas asignadas a este viaje
+        </div>
+
+        <table *ngIf="clientas.length > 0" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Estatus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of clientas">
+              <td>{{ c.nombre }} {{ c.apellido }}</td>
+              <td>{{ c.email }}</td>
+              <td>{{ c.telefono }}</td>
+              <td>
+                <span class="badge bg-success" *ngIf="c.pivot.estatus === 'confirmada'">
+                  Confirmada
+                </span>
+                <span class="badge bg-warning" *ngIf="c.pivot.estatus !== 'confirmada'">
+                  {{ c.pivot.estatus }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+
     </div>
   </div>
 </div>
