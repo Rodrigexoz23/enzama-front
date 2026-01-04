@@ -4,6 +4,7 @@ import { ViajesService } from '../services/viajes';
 import { FormsModule } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
 import { Subject } from 'rxjs';
+import { Reservas } from '../services/reservas';
 
 @Component({
   selector: 'app-viajes',
@@ -34,15 +35,35 @@ export class Viajes {
   toast: any;
   searchTerm = '';
   private searchSubject = new Subject<string>();
+  clientas:any[] = [];
+  
 
-  constructor(private viajesService: ViajesService) {}
+
+  constructor(private viajesService: ViajesService, private reservasService: Reservas) {}
 
   ngOnInit(): void {
-    this.cargarViajes();    
+    this.cargarViajes();  
   }
 
   onSearchChange(valor: string) {
     this.searchSubject.next(valor);
+  }
+
+  verClientas(viajeId:number, nombreViaje:string) {
+    this.viajeSeleccionado = nombreViaje;
+    this.reservasService.obtenerClientasPorViaje(viajeId).subscribe({
+      next: (resp) => {
+        this.clientas = resp.clientas;
+        const modalElement = document.getElementById('modalClientasViaje');
+        const modalClientas = new bootstrap.Modal(modalElement);
+        modalClientas.show();
+        console.log('Clientas:', this.clientas);
+      },
+      error: (err) => {
+        console.error('Error al obtener clientas:', err);
+        this.mostrarToast('Error al obtener clientas 😞');
+      }
+    });
   }
 
   cargarViajes(page: number = 1) {
