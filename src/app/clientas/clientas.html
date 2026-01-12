@@ -37,7 +37,11 @@
         <td>{{clienta.email}}</td>
         <td>{{clienta.telefono}}</td>
         <td>{{clienta.fecha_registro}}</td>
-        <td><button class="btn btn-danger btn-sm" (click)="mostrarModalEliminar(clienta)">Eliminar</button></td>
+        <td>
+          <button class="btn btn-danger btn-sm me-2" (click)="mostrarModalEliminar(clienta)">Eliminar</button>
+          <button class="btn btn-info btn-sm me-2" (click)="abrirModalAsignarViaje(clienta)">Asignar viaje</button>
+        </td>
+
         </tr>
     </tbody>
     </table>
@@ -136,6 +140,38 @@
     </div>
   </div>
 </div>
+
+<!-- MODAL DE PARA ASIGNAR VIAJE A CLIENTA -->
+<div class="modal fade" id="modalAsignarViaje" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Asignar viaje a {{ clientaSeleccionada?.nombre }} {{ clientaSeleccionada?.apellido }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <label for="" class="form-label">Selecciona un viaje</label>
+        <select class="form-select" [(ngModel)]="viajeSeleccionadoId">
+          <option [ngValue]="null">-- Selecciona --</option>
+          <option [value]="viaje.id" *ngFor="let viaje of viajesDisponibles">
+            {{viaje.nombre}} -- {{viaje.destino}}
+          </option>
+        </select>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button class="btn btn-primary" [disabled]="!viajeSeleccionadoId" (click)="asignarViaje()">Asignar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
 
 <div class="toast-container position-fixed top-0 end-0 p-3">

@@ -15,7 +15,7 @@ export class Reservas {
     return this.http.get(`${this.apiUrl}/viajes/${viajeId}/clientas`);
   }
 
-  crearReserva(data: {
+  asignarClienta(data: {
     cliente_id: number;
     viaje_id: number;
     estatus: string;

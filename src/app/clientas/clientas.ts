@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { ViajesService } from '../services/viajes';
+import { Reservas } from '../services/reservas';
 
 @Component({
   selector: 'app-clientas',
@@ -33,9 +35,11 @@ export class Clientas {
   toastMensaje = '';
   toast: any;
   private searchSubject = new Subject<string>();
-  
-  
-  constructor(private clientaService:ClientasService) { }
+  viajesDisponibles: any[] = [];
+  viajeSeleccionadoId: number | null = null;
+
+
+  constructor(private clientaService:ClientasService, private viajeService:ViajesService, private reservaService:Reservas) { }
 
   ngOnInit(): void {
     this.cargarClientas();
@@ -163,5 +167,54 @@ export class Clientas {
     this.toast.show();
   }
 
+  abrirModalAsignarViaje(clienta: any) {
+    this.clientaSeleccionada = clienta;
+    this.viajeSeleccionadoId = null;
+    this.viajeService.obtenerViajes().subscribe({
+      next: (resp) => {
+        this.viajesDisponibles = resp.data ?? resp;
+        console.log(this.viajesDisponibles);
+        
+      },
+      error: (err) => {
+        console.error('Error al obtener viajes disponibles:', err);
+        this.mostrarToast('Ocurrió un error al cargar los viajes disponibles.');
+      }
+    });
+  const modalElement = document.getElementById('modalAsignarViaje');
+  const modal = new bootstrap.Modal(modalElement);
+  modal.show();
+  }
 
+  asignarViaje() {
+    if (!this.clientaSeleccionada || !this.viajeSeleccionadoId) {
+      return;      
+    }
+    const payload = {
+      cliente_id: this.clientaSeleccionada.id,
+      viaje_id: this.viajeSeleccionadoId,
+      estatus: 'confirmada'
+    };
+
+    this.reservaService.asignarClienta(payload).subscribe({
+      next: () => {
+        this.mostrarToast('Clienta asignada al viaje 🎉');
+        const modalElement = document.getElementById('modalAsignarViaje');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal?.hide();
+      },
+      error: (err) => {
+        if (err.status === 409) {
+          this.mostrarToast("La clienta ya esta asignada a este viaje ⚠️")          
+        } else {
+          console.error(err);
+          this.mostrarToast("Error al asignar viaje")
+        }
+      }
+    })
+    
+  }
+
+  
 }
+
