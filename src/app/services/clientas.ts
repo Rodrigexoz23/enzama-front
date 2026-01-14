@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class ClientasService {
   
-  private apiUrl = 'http://127.0.0.1:8000/api/clientas';
+  // private apiUrl = 'http://127.0.0.1:8000/api/clientas';
+  private apiUrl = 'http://192.168.100.8:8000/api/clientas';
   constructor(private http: HttpClient) { }
 
   obtenerClientas(

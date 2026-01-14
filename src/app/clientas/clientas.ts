@@ -170,7 +170,7 @@ export class Clientas {
   abrirModalAsignarViaje(clienta: any) {
     this.clientaSeleccionada = clienta;
     this.viajeSeleccionadoId = null;
-    this.viajeService.obtenerViajes().subscribe({
+    this.viajeService.obtenerTodosLosViajes().subscribe({
       next: (resp) => {
         this.viajesDisponibles = resp.data ?? resp;
         console.log(this.viajesDisponibles);

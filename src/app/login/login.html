@@ -41,3 +41,22 @@
     </form>
   </div>
 </div>
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div
+    class="toast align-items-center text-bg-danger border-0"
+    id="toastSuccess"
+    role="alert"
+  >
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ toastMensaje }}
+      </div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+      ></button>
+    </div>
+  </div>
+</div>
