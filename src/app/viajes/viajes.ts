@@ -20,10 +20,9 @@ export class Viajes {
   totalPaginas = 0;
   porPagina = 7;
   viaje = {
-    nombre: 'Prueba viaje',
-    destino: 'Prueba destino',
-    fecha_inicio: '2025-01-01',
-    fecha_fin: '2025-01-10',
+    nombre: '',
+    destino: '',
+    fecha_inicio: '',
     precio: 5
   }
   viajeSeleccionado: any = null;
@@ -101,7 +100,6 @@ export class Viajes {
       this.viaje.nombre.trim() !== '' &&
       this.viaje.destino.trim() !== '' &&
       this.viaje.fecha_inicio.trim() !== '' &&
-      this.viaje.fecha_fin.trim() !== '' &&
       this.viaje.precio > 0
     );
   }
@@ -127,7 +125,7 @@ export class Viajes {
     this.viajesService.agregarViaje(this.viaje).subscribe({
     next: () => {
       this.cargarViajes();      
-      this.viaje = { nombre: '', destino: '', fecha_inicio: '', fecha_fin: '', precio: 0 };
+      this.viaje = { nombre: '', destino: '', fecha_inicio: '', precio: 0 };
       this.modalAgregar.hide();
       this.mostrarToast('Viaje agregado correctamente 🎉');
       document.body.classList.remove('modal-open');

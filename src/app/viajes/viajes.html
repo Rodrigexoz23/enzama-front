@@ -23,7 +23,6 @@
         <th scope="col" style="background-color: violet" >Nombre</th>
         <th scope="col" style="background-color: violet" >Destino</th>
         <th scope="col" style="background-color: violet" >Fecha_inicio</th>
-        <th scope="col" style="background-color: violet" >Fecha_fin</th>
         <th scope="col" style="background-color: violet" >Precio</th>
         <th scope="col" style="background-color: violet" >Acción</th>
         </tr>
@@ -33,7 +32,6 @@
         <td>{{viaje.nombre}}</td>
         <td>{{viaje.destino}}</td>
         <td>{{viaje.fecha_inicio}}</td>
-        <td>{{viaje.fecha_fin}}</td>
         <td>{{viaje.precio}}</td>
         <td>
           <button class="btn btn-danger btn-sm me-2" (click)="mostrarModalEliminar(viaje)">Eliminar</button>
@@ -94,11 +92,6 @@
                 placeholder="fecha_inicio"
                 [(ngModel)]="viaje.fecha_inicio"
                 name="fecha_inicio">
-
-            <input class="form-control mb-2"
-                placeholder="fecha_fin"
-                [(ngModel)]="viaje.fecha_fin"
-                name="fecha_fin">
 
             <input class="form-control mb-2"
                 placeholder="Precio"
