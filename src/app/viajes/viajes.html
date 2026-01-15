@@ -162,7 +162,6 @@
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>Email</th>
               <th>Teléfono</th>
               <th>Estatus</th>
             </tr>
@@ -170,7 +169,6 @@
           <tbody>
             <tr *ngFor="let c of clientas">
               <td>{{ c.nombre }} {{ c.apellido }}</td>
-              <td>{{ c.email }}</td>
               <td>{{ c.telefono }}</td>
               <td>
                 <span class="badge bg-success" *ngIf="c.pivot.estatus === 'confirmada'">

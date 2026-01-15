@@ -24,7 +24,6 @@ export class Clientas {
   clienta = {
     nombre: '',
     apellido: '',
-    email: '',
     telefono: ''
   }
   clientaSeleccionada: any = null;
@@ -101,7 +100,6 @@ export class Clientas {
     return (
       this.clienta.nombre.trim() !== '' &&
       this.clienta.apellido.trim() !== '' &&
-      this.clienta.email.includes('@') &&
       this.clienta.telefono.trim() !== ''
     );
   }
@@ -127,7 +125,7 @@ export class Clientas {
     this.clientaService.agregarClienta(this.clienta).subscribe({
     next: () => {
       this.cargarClientas();      
-      this.clienta = { nombre: '', apellido: '', email: '', telefono: '' };
+      this.clienta = { nombre: '', apellido: '', telefono: '' };
       this.modalAgregar.hide();
       this.mostrarToast('Clienta agregada correctamente 🎉');
       document.body.classList.remove('modal-open');
@@ -135,7 +133,7 @@ export class Clientas {
       if (backdrop) backdrop.remove();
     },
     error: () => {
-      alert('Error al guardar la clienta');
+      this.mostrarToast("Error al guardar la clienta")
     }
   });
   };
