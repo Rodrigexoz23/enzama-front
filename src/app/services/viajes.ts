@@ -7,17 +7,18 @@ import { Observable } from 'rxjs';
 })
 export class ViajesService {
 
-  // private apiUrl = 'http://127.0.0.1:8000/api/viajes';
-  private apiUrl = 'http://192.168.100.8:8000/api/viajes';
+  private apiUrl = 'http://127.0.0.1:8000/api/viajes';
+  // private apiUrl = 'http://192.168.100.8:8000/api/viajes';
   constructor(private http: HttpClient) { }
 
   obtenerViajes(
     page: number = 1,
     perPage: number = 5,
     search: string = ''
-  ): Observable<any>  {
-    return this.http.get<any[]>(
-      `${this.apiUrl}?page=${page}&per_page=${perPage}&search=${search}`);
+  ) {
+    return this.http.get<any>(
+      `${this.apiUrl}?page=${page}&per_page=${perPage}&search=${search}`
+    );
   }
 
   agregarViaje(viaje: any): Observable<any> {

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ViajesService } from '../services/viajes';
 import { FormsModule } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
-import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { Reservas } from '../services/reservas';
 
 @Component({
@@ -42,7 +42,17 @@ export class Viajes {
   constructor(private viajesService: ViajesService, private reservasService: Reservas) {}
 
   ngOnInit(): void {
-    this.cargarViajes();  
+    this.cargarViajes();
+    
+    this.searchSubject
+      .pipe(
+        debounceTime(400),
+        distinctUntilChanged()
+      ).subscribe((valor) => {
+        this.searchTerm = valor;
+        this.paginaActual = 1;
+        this.cargarViajes();
+    })
   }
 
   onSearchChange(valor: string) {
